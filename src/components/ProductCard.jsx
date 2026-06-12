@@ -3,16 +3,20 @@ import { formatPrice } from "../data/products"
 export default function ProductCard({ product }) {
   return (
     <div className="bg-white border border-gray-100 rounded-xl overflow-hidden cursor-pointer hover:border-gray-300 transition-colors group">
-      {/* Image area */}
+      {/* Image */}
       <div className="aspect-[3/4] bg-gray-50 flex items-center justify-center relative border-b border-gray-100">
         {product.image ? (
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
         ) : (
-          <span className="text-5xl">👗</span>
+          <span className="text-4xl md:text-5xl">👗</span>
         )}
 
         {product.badge && (
-          <span className={`absolute top-2 left-2 text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-medium ${
+          <span className={`absolute top-2 left-2 text-[9px] md:text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-medium ${
             product.badge === "new"
               ? "bg-emerald-50 text-emerald-700"
               : "bg-orange-50 text-orange-700"
@@ -29,20 +33,20 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Info */}
-      <div className="p-3">
-        <p className="text-[10px] text-gray-300 uppercase tracking-widest mb-1">{product.age}</p>
-        <p className="text-sm font-medium text-gray-900 leading-snug mb-2">{product.name}</p>
-        <div className="flex items-baseline gap-2">
-          <span className="text-sm font-medium">{formatPrice(product.price)}</span>
+      <div className="p-2.5 md:p-3">
+        <p className="text-[9px] md:text-[10px] text-gray-300 uppercase tracking-widest mb-1">{product.age}</p>
+        <p className="text-xs md:text-sm font-medium text-gray-900 leading-snug mb-1.5 md:mb-2">{product.name}</p>
+        <div className="flex items-baseline gap-1.5 md:gap-2">
+          <span className="text-xs md:text-sm font-medium">{formatPrice(product.price)}</span>
           {product.oldPrice && (
-            <span className="text-xs text-gray-300 line-through">{formatPrice(product.oldPrice)}</span>
+            <span className="text-[10px] md:text-xs text-gray-300 line-through">{formatPrice(product.oldPrice)}</span>
           )}
         </div>
-        <div className="flex gap-1 mt-2">
+        <div className="flex gap-1 mt-1.5 md:mt-2">
           {product.colors.map((color, i) => (
             <div
               key={i}
-              className="w-2.5 h-2.5 rounded-full border border-gray-200"
+              className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full border border-gray-200"
               style={{ backgroundColor: color }}
             />
           ))}
