@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import Catalog from "./pages/Catalog"
-import Shop from "./pages/Shop"
+import Shop from "./pages/shop"
 import Navbar from "./components/Navbar"
 
 function App() {
