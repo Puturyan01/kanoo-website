@@ -132,7 +132,7 @@ export default function Navbar() {
                 ))}
               </div>
             </li>
-
+            
             <li>
               <Link to="/catalog" className={`text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
                 Catalog
