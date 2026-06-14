@@ -217,20 +217,6 @@ export default function Navbar() {
             mobileOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* Search */}
-          <div className="px-5 py-4 border-b border-gray-50">
-            <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-2.5">
-              <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="bg-transparent text-xs text-gray-500 placeholder-gray-300 outline-none w-full"
-              />
-            </div>
-          </div>
-
           {/* Menu */}
           <ul className="list-none p-0 m-0 divide-y divide-gray-50 flex-1">
             <li>
