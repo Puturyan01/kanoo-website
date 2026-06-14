@@ -280,9 +280,9 @@ export default function Navbar() {
             </Link>
             </li>
             <li>
-              <a className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
-                <span>✉️</span> Contact
-              </a>
+            <Link to="/contact" className={`text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
+              Contact
+            </Link>
             </li>
           </ul>
 
