@@ -46,7 +46,7 @@ export default function About() {
       <section className="relative bg-gray-900 text-white px-4 md:px-16 py-20 md:py-32 overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 text-[200px] leading-none select-none">K</div>
+          <div className="absolute top-10 left-10 text-[200px] leading-none select-none">KANOO.</div>
           <div className="absolute bottom-10 right-10 text-[150px] leading-none select-none">👶</div>
         </div>
 

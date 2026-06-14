@@ -214,11 +214,6 @@ export default function ProductDetail() {
             >
               {addedToCart ? "✓ Added to Cart!" : "Add to Cart"}
             </button>
-            <button className="w-14 h-14 border border-gray-200 rounded-xl flex items-center justify-center hover:border-gray-400 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 0 0 0 6.364L12 20.364l7.682-7.682a4.5 4.5 0 0 0-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 0 0-6.364 0z" />
-              </svg>
-            </button>
           </div>
 
           {/* Info badges */}

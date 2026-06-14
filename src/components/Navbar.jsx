@@ -144,15 +144,13 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <a className={`text-xs tracking-widest uppercase transition-colors cursor-pointer ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
+             <Link to="/about" className="text-xs tracking-widest uppercase transition-colors cursor-pointer">
                 About
-              </a>
+              </Link>
             </li>
-            <li>
-              <a className={`text-xs tracking-widest uppercase transition-colors cursor-pointer ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
-                Contact
-              </a>
-            </li>
+            <Link to="/contact" className={'text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}'}>
+              Contact
+            </Link>
           </ul>
 
           {/* Desktop Icons */}
