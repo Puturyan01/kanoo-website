@@ -7,6 +7,7 @@ import About from "./pages/About"
 import Contact from "./pages/Contact"
 import SizeChart from "./pages/SizeChart"
 import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/size-chart" element={<SizeChart />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
