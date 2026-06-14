@@ -131,7 +131,7 @@ export default function Shop() {
         <div className="flex gap-6 md:gap-8 items-start">
           {/* Sidebar desktop */}
           <aside className="hidden md:block w-48 shrink-0 bg-white border border-gray-100 rounded-xl p-5 sticky top-20">
-            <SidebarContent />
+            <SidebarContent/>
           </aside>
 
           <div className="flex-1">
