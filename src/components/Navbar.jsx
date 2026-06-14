@@ -139,9 +139,14 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a className={`text-xs tracking-widest uppercase transition-colors cursor-pointer ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
-                Size Chart
-              </a>
+            <Link
+              to="/size-chart"
+              className={`text-xs tracking-widest uppercase transition-colors ${
+                isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"
+              }`}
+            >
+              Size Chart
+            </Link>
             </li>
             <li>
              <Link to="/about" className="text-xs tracking-widest uppercase transition-colors cursor-pointer">
@@ -262,15 +267,17 @@ export default function Navbar() {
                 <span>📖</span> Catalog
               </Link>
             </li>
+            <Link
+              to="/size-chart"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <span>📏</span> Size Chart
+            </Link>
             <li>
-              <a className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
-                <span>📏</span> Size Chart
-              </a>
-            </li>
-            <li>
-              <a className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
-                <span>💛</span> About
-              </a>
+            <Link to="/about" className={`text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
+              About
+            </Link>
             </li>
             <li>
               <a className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors cursor-pointer">
