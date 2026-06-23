@@ -12,7 +12,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
   const [sizeError, setSizeError] = useState(false)
-  const [sizeError, setSizeError] = useState(null)
+  const [mainImage, setMainImage] = useState(false)
 
   if (!product) {
     return (
@@ -56,6 +56,7 @@ export default function ProductDetail() {
       {/* Main Content */}
       <div className="px-4 md:px-12 py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
 
+
         {/* LEFT: Image */}
         <div className="flex flex-col gap-3">
         {/* Main image */}
@@ -69,6 +70,7 @@ export default function ProductDetail() {
           ) : (
             <span className="text-[120px]">👗</span>
           )}
+          </div>
 
             {product.badge && (
               <span className={`absolute top-4 left-4 text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full font-medium ${
@@ -95,6 +97,7 @@ export default function ProductDetail() {
             </button>
           ))}
         </div>
+      
 
         {/* RIGHT: Info */}
         <div className="flex flex-col">
@@ -276,7 +279,7 @@ export default function ProductDetail() {
                   <p className="text-[10px] text-gray-300 uppercase tracking-widest mb-1">{p.age}</p>
                   <p className="text-sm font-medium text-gray-900 mb-1">{p.name}</p>
                   <p className="text-sm font-medium">{formatPrice(p.price)}</p>
-                </div>
+              </div>
               </Link>
             ))}
           </div>
