@@ -160,27 +160,10 @@ export default function Navbar() {
 
           {/* Desktop Icons */}
           <div className={`flex gap-4 items-center border-l pl-6 transition-colors ${isScrolled ? "border-gray-200 text-gray-500" : "border-gray-100 text-gray-400"}`}>
-            <button aria-label="Cart" className="hover:text-gray-900 transition-colors relative">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-teal-500 text-white text-[9px] rounded-full flex items-center justify-center font-medium">
-                0
-              </span>
-            </button>
-          </div>
-        </div>
+          </div></div>
 
         {/* ── MOBILE: Cart + Hamburger ── */}
         <div className="flex md:hidden items-center gap-3 text-gray-400">
-          <button aria-label="Cart" className="hover:text-gray-900 transition-colors relative">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-teal-500 text-white text-[9px] rounded-full flex items-center justify-center font-medium">
-              0
-            </span>
-          </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"

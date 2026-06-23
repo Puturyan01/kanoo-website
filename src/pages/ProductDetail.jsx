@@ -12,6 +12,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
   const [sizeError, setSizeError] = useState(false)
+  const [sizeError, setSizeError] = useState(null)
 
   if (!product) {
     return (
@@ -23,6 +24,8 @@ export default function ProductDetail() {
       </div>
     )
   }
+
+  const galleryImages = product.gallery || [product.image]
 
   const related = products
     .filter((p) => p.category === product.category && p.id !== product.id)
@@ -55,17 +58,17 @@ export default function ProductDetail() {
 
         {/* LEFT: Image */}
         <div className="flex flex-col gap-3">
-          {/* Main image */}
-          <div className="aspect-[4/5] bg-gray-50 rounded-2xl flex items-center justify-center relative overflow-hidden border border-gray-100">
-            {product.image ? (
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <span className="text-[120px]">👗</span>
-            )}
+        {/* Main image */}
+        <div className="aspect-[4/5] bg-gray-50 rounded-2xl flex items-center justify-center relative overflow-hidden border border-gray-100">
+          {(mainImage || galleryImages[0]) ? (
+            <img
+              src={mainImage || galleryImages[0]}
+              alt={product.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-[120px]">👗</span>
+          )}
 
             {product.badge && (
               <span className={`absolute top-4 left-4 text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full font-medium ${
@@ -78,19 +81,19 @@ export default function ProductDetail() {
             )}
           </div>
 
-          {/* Thumbnail row (placeholder) */}
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(4)].map((_, i) => (
-              <div
-                key={i}
-                className={`aspect-square bg-gray-50 rounded-xl flex items-center justify-center cursor-pointer border-2 transition-colors ${
-                  i === 0 ? "border-gray-900" : "border-transparent hover:border-gray-200"
-                }`}
-              >
-                <span className="text-2xl opacity-40">👗</span>
-              </div>
-            ))}
-          </div>
+        {/* Thumbnail row */}
+        <div className={`grid gap-2 ${galleryImages.length === 3 ? "grid-cols-3" : galleryImages.length === 4 ? "grid-cols-4" : "grid-cols-2"}`}>
+          {galleryImages.map((img, i) => (
+            <button
+              key={i}
+              onClick={() => setMainImage(img)}
+              className={`aspect-square bg-gray-50 rounded-xl overflow-hidden border-2 transition-colors ${
+                (mainImage || galleryImages[0]) === img ? "border-gray-900" : "border-transparent hover:border-gray-200"
+              }`}
+            >
+              <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
+            </button>
+          ))}
         </div>
 
         {/* RIGHT: Info */}
