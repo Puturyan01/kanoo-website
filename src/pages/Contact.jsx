@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 const faqs = [
   {
     q: "Berapa lama pengiriman?",
-    a: "Pengiriman reguler 3-5 hari kerja. Express 1-2 hari kerja untuk Jabodetabek dan Bali.",
+    a: "Pengiriman reguler 3-7 hari kerja. Express 1-2 hari kerja untuk Jabodetabek dan Bali.",
   },
   {
     q: "Apakah bisa return atau tukar ukuran?",

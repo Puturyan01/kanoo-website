@@ -6,8 +6,13 @@ import ProductDetail from "./pages/ProductDetail"
 import About from "./pages/About"
 import Contact from "./pages/Contact"
 import SizeChart from "./pages/SizeChart"
+
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+
+import Login from "./admin/login"
+import Dashboard from "./admin/dashboard"
+import Products from "./admin/product"
 
 function App() {
   return (
