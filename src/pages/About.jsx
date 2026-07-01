@@ -43,7 +43,7 @@ export default function About() {
     <main className="min-h-screen bg-white">
 
       {/* ── HERO ── */}
-      <section className="relative bg-gray-900 text-white px-4 md:px-16 py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-gray-900 text-white px-4 md:px-16 pt-24 pb-20 md:pt-36 md:pb-32 -mt-14 overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 text-[200px] leading-none select-none">KANOO.</div>
@@ -57,7 +57,7 @@ export default function About() {
             dreams
           </h1>
           <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-lg font-light">
-            Kanoo was born from a simple belief — that children deserve clothing as 
+            Kanoo was born from a simple belief — that children deserve clothing as
             joyful, comfortable, and full of life as they are.
           </p>
         </div>
@@ -75,17 +75,17 @@ export default function About() {
             </h2>
             <div className="space-y-4 text-sm text-gray-400 leading-relaxed font-light">
               <p>
-                Kanoo started in 2020 in a small studio in Bali, Indonesia. 
-                What began as a passion project between a group of young parents 
+                Kanoo started in 2020 in a small studio in Bali, Indonesia.
+                What began as a passion project between a group of young parents
                 quickly grew into a beloved children's wear brand.
               </p>
               <p>
-                We noticed that most kids' clothing prioritized trends over comfort — 
-                so we flipped the script. Every Kanoo piece starts with the question: 
+                We noticed that most kids' clothing prioritized trends over comfort —
+                so we flipped the script. Every Kanoo piece starts with the question:
                 <em className="text-gray-600"> "Will a child love wearing this?"</em>
               </p>
               <p>
-                Today, Kanoo dresses thousands of little ones across Indonesia and beyond, 
+                Today, Kanoo dresses thousands of little ones across Indonesia and beyond,
                 and we're just getting started.
               </p>
             </div>
@@ -144,15 +144,13 @@ export default function About() {
             {milestones.map((m, i) => (
               <div
                 key={m.year}
-                className={`relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 ${
-                  i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
+                className={`relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                  }`}
               >
                 {/* Content */}
                 <div className={`flex-1 ${i % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                  <div className={`bg-white border border-gray-100 rounded-xl p-5 hover:border-gray-200 transition-colors inline-block w-full md:w-auto md:max-w-xs ${
-                    i % 2 === 0 ? "md:ml-auto" : ""
-                  }`}>
+                  <div className={`bg-white border border-gray-100 rounded-xl p-5 hover:border-gray-200 transition-colors inline-block w-full md:w-auto md:max-w-xs ${i % 2 === 0 ? "md:ml-auto" : ""
+                    }`}>
                     <p className="font-serif text-2xl font-medium text-teal-600 mb-1">{m.year}</p>
                     <p className="text-sm text-gray-500 font-light leading-relaxed">{m.event}</p>
                   </div>

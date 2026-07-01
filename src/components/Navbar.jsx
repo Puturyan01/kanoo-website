@@ -1,32 +1,37 @@
 import { useState, useRef, useEffect, useCallback } from "react"
-import { Link } from "react-router-dom"
+import { Link, NavLink, useLocation } from "react-router-dom"
 
 export default function Navbar() {
   const [shopOpen, setShopOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileShopOpen, setMobileShopOpen] = useState(false)
   const closeTimer = useRef(null)
+  const location = useLocation()
 
   // ── SCROLL BEHAVIOR ──
   const [isVisible, setIsVisible] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
   const lastScrollY = useRef(0)
 
+  // Pages where hero is DARK (dark bg at top) → navbar text should be light initially
+  const darkHeroPages = ["/about"]
+  // Pages where hero is LIGHT/WHITE (light bg at top) → navbar text always dark
+  const lightHeroPages = ["/contact", "/size-chart", "/catalog", "/shop"]
+
+  const isOnDarkHero = darkHeroPages.includes(location.pathname)
+  const isOnLightHero = lightHeroPages.includes(location.pathname)
+
   const handleScroll = useCallback(() => {
     const currentY = window.scrollY
 
-    // Sudah scroll ke bawah dari posisi awal
     setIsScrolled(currentY > 10)
 
     if (currentY < 10) {
-      // Di paling atas — selalu tampil
       setIsVisible(true)
     } else if (currentY > lastScrollY.current) {
-      // Scroll ke bawah — sembunyikan
       setIsVisible(false)
       setShopOpen(false)
     } else {
-      // Scroll ke atas — tampilkan
       setIsVisible(true)
     }
 
@@ -37,6 +42,12 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [handleScroll])
+
+  // Reset scroll state when navigating to a new page
+  useEffect(() => {
+    setIsScrolled(window.scrollY > 10)
+    setMobileOpen(false)
+  }, [location.pathname])
 
   const handleMouseEnter = () => {
     clearTimeout(closeTimer.current)
@@ -54,16 +65,42 @@ export default function Navbar() {
     { label: "Shoes", icon: "👟", category: "shoes" },
   ]
 
+  // Determine navbar background & text color based on page + scroll state
+  const navBg = isScrolled
+    ? "bg-white/90 backdrop-blur-md border-b border-white/20 shadow-sm"
+    : isOnDarkHero
+    ? "bg-transparent border-b border-white/10"
+    : "bg-white border-b border-gray-100"
+
+  // Text color for nav links
+  const getLinkColor = (isActive) => {
+    if (isScrolled || isOnLightHero) {
+      // Scrolled or light-hero page → always dark text
+      return isActive ? "text-gray-900" : "text-gray-400 hover:text-gray-900"
+    } else if (isOnDarkHero) {
+      // Dark hero page, not scrolled → light text
+      return isActive ? "text-white" : "text-white/60 hover:text-white"
+    }
+    // Default
+    return isActive ? "text-gray-900" : "text-gray-400 hover:text-gray-900"
+  }
+
+  // Active indicator color
+  const indicatorColor = (isScrolled || isOnLightHero)
+    ? "bg-gray-900"
+    : isOnDarkHero
+    ? "bg-white"
+    : "bg-gray-900"
+
+  // Check if shop routes are active
+  const isShopActive = location.pathname.startsWith("/shop") || location.pathname.startsWith("/product")
+
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-8 h-14 flex items-center justify-between transition-all duration-500 ${
           isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${
-          isScrolled
-            ? "bg-white/80 backdrop-blur-md border-b border-white/20 shadow-sm"
-            : "bg-white border-b border-gray-100"
-        }`}
+        } ${navBg}`}
       >
 
         {/* ── LOGO ── */}
@@ -90,7 +127,7 @@ export default function Navbar() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <button className={`text-xs tracking-widest uppercase transition-colors flex items-center gap-1 ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
+              <button className={`relative text-xs tracking-widest uppercase transition-colors flex items-center gap-1 pb-1 group ${getLinkColor(isShopActive)}`}>
                 Shop
                 <svg
                   className={`w-3 h-3 transition-transform duration-200 ${shopOpen ? "rotate-180" : ""}`}
@@ -98,6 +135,13 @@ export default function Navbar() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
+                {/* Active underline indicator */}
+                <span
+                  className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
+                    isShopActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                  }`}
+                  style={{ transformOrigin: "center" }}
+                />
               </button>
 
               {/* Dropdown */}
@@ -132,42 +176,115 @@ export default function Navbar() {
                 ))}
               </div>
             </li>
-            
+
+            {/* Catalog */}
             <li>
-              <Link to="/catalog" className={`text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
-                Catalog
-              </Link>
+              <NavLink
+                to="/catalog"
+                className={({ isActive }) =>
+                  `relative text-xs tracking-widest uppercase transition-colors pb-1 block group ${getLinkColor(isActive)}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    Catalog
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
+                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                      }`}
+                      style={{ transformOrigin: "center" }}
+                    />
+                  </>
+                )}
+              </NavLink>
             </li>
+
+            {/* Size Chart */}
             <li>
-            <Link
-              to="/size-chart"
-              className={`text-xs tracking-widest uppercase transition-colors ${
-                isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"
-              }`}
-            >
-              Size Chart
-            </Link>
+              <NavLink
+                to="/size-chart"
+                className={({ isActive }) =>
+                  `relative text-xs tracking-widest uppercase transition-colors pb-1 block group ${getLinkColor(isActive)}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    Size Chart
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
+                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                      }`}
+                      style={{ transformOrigin: "center" }}
+                    />
+                  </>
+                )}
+              </NavLink>
             </li>
+
+            {/* About */}
             <li>
-             <Link to="/about" className="text-xs tracking-widest uppercase transition-colors cursor-pointer">
-                About
-              </Link>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  `relative text-xs tracking-widest uppercase transition-colors pb-1 block group ${getLinkColor(isActive)}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    About
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
+                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                      }`}
+                      style={{ transformOrigin: "center" }}
+                    />
+                  </>
+                )}
+              </NavLink>
             </li>
-            <Link to="/contact" className={'text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}'}>
-              Contact
-            </Link>
+
+            {/* Contact */}
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  `relative text-xs tracking-widest uppercase transition-colors pb-1 block group ${getLinkColor(isActive)}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    Contact
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
+                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                      }`}
+                      style={{ transformOrigin: "center" }}
+                    />
+                  </>
+                )}
+              </NavLink>
+            </li>
           </ul>
 
           {/* Desktop Icons */}
-          <div className={`flex gap-4 items-center border-l pl-6 transition-colors ${isScrolled ? "border-gray-200 text-gray-500" : "border-gray-100 text-gray-400"}`}>
-          </div></div>
+          <div className={`flex gap-4 items-center border-l pl-6 transition-colors ${
+            (isScrolled || isOnLightHero) ? "border-gray-200 text-gray-500" : 
+            isOnDarkHero ? "border-white/20 text-white/60" :
+            "border-gray-100 text-gray-400"
+          }`}>
+          </div>
+        </div>
 
-        {/* ── MOBILE: Cart + Hamburger ── */}
-        <div className="flex md:hidden items-center gap-3 text-gray-400">
+        {/* ── MOBILE: Hamburger ── */}
+        <div className="flex md:hidden items-center gap-3">
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
-            className="text-gray-700 hover:text-gray-900 transition-colors"
+            className={`transition-colors ${
+              (isScrolled || isOnLightHero) ? "text-gray-700 hover:text-gray-900" :
+              isOnDarkHero ? "text-white/80 hover:text-white" :
+              "text-gray-700 hover:text-gray-900"
+            }`}
           >
             {mobileOpen ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -205,9 +322,14 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => setMobileShopOpen(!mobileShopOpen)}
-                className="w-full flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase text-gray-700 hover:text-gray-900 transition-colors"
+                className={`w-full flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase transition-colors ${
+                  isShopActive ? "text-gray-900 font-semibold" : "text-gray-600 hover:text-gray-900"
+                }`}
               >
-                <span className="flex items-center gap-3"><span>🛍️</span> Shop</span>
+                <span className="flex items-center gap-3">
+                  <span>🛍️</span> Shop
+                  {isShopActive && <span className="w-1.5 h-1.5 rounded-full bg-gray-900 ml-1" />}
+                </span>
                 <svg
                   className={`w-3 h-3 transition-transform duration-200 ${mobileShopOpen ? "rotate-180" : ""}`}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -231,28 +353,37 @@ export default function Navbar() {
                 ))}
               </div>
             </li>
-            <li>
-              <Link to="/catalog" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors">
-                <span>📖</span> Catalog
-              </Link>
-            </li>
-            <Link
-              to="/size-chart"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 px-6 py-4 text-xs tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <span>📏</span> Size Chart
-            </Link>
-            <li>
-            <Link to="/about" className={`text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
-              About
-            </Link>
-            </li>
-            <li>
-            <Link to="/contact" className={`text-xs tracking-widest uppercase transition-colors ${isScrolled ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-gray-900"}`}>
-              Contact
-            </Link>
-            </li>
+
+            {[
+              { to: "/catalog", icon: "📖", label: "Catalog" },
+              { to: "/size-chart", icon: "📏", label: "Size Chart" },
+              { to: "/about", icon: "✨", label: "About" },
+              { to: "/contact", icon: "💬", label: "Contact" },
+            ].map(({ to, icon, label }) => (
+              <li key={to}>
+                <NavLink
+                  to={to}
+                  onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase transition-colors ${
+                      isActive ? "text-gray-900 font-semibold" : "text-gray-600 hover:text-gray-900"
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span className="flex items-center gap-3">
+                        <span>{icon}</span> {label}
+                        {isActive && <span className="w-1.5 h-1.5 rounded-full bg-gray-900 ml-1" />}
+                      </span>
+                      {isActive && (
+                        <span className="w-1 h-4 rounded-full bg-gray-900 opacity-30" />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              </li>
+            ))}
           </ul>
 
           {/* Bottom drawer */}

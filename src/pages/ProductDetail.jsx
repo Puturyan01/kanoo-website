@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { products, formatPrice } from "../data/products"
 
@@ -12,7 +12,15 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
   const [sizeError, setSizeError] = useState(false)
-  const [mainImage, setMainImage] = useState(false)
+  const [mainImage, setMainImage] = useState(null)
+
+  useEffect(() => {
+    setMainImage(null)
+    setSelectedSize(null)
+    setSelectedColor(0)
+    setQuantity(1)
+    setSizeError(false)
+  }, [id])
 
   if (!product) {
     return (
@@ -54,23 +62,22 @@ export default function ProductDetail() {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 md:px-12 py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
+      <div className="px-4 md:px-12 py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto items-start">
 
-
-        {/* LEFT: Image */}
+        {/* LEFT: Image Gallery */}
         <div className="flex flex-col gap-3">
-        {/* Main image */}
-        <div className="aspect-[4/5] bg-gray-50 rounded-2xl flex items-center justify-center relative overflow-hidden border border-gray-100">
-          {(mainImage || galleryImages[0]) ? (
-            <img
-              src={mainImage || galleryImages[0]}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span className="text-[120px]">👗</span>
-          )}
-          </div>
+
+          {/* Main image */}
+          <div className="aspect-[4/5] bg-gray-50 rounded-2xl flex items-center justify-center relative overflow-hidden border border-gray-100">
+            {(mainImage || galleryImages[0]) ? (
+              <img
+                src={mainImage || galleryImages[0]}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-[120px]">👗</span>
+            )}
 
             {product.badge && (
               <span className={`absolute top-4 left-4 text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full font-medium ${
@@ -83,21 +90,22 @@ export default function ProductDetail() {
             )}
           </div>
 
-        {/* Thumbnail row */}
-        <div className={`grid gap-2 ${galleryImages.length === 3 ? "grid-cols-3" : galleryImages.length === 4 ? "grid-cols-4" : "grid-cols-2"}`}>
-          {galleryImages.map((img, i) => (
-            <button
-              key={i}
-              onClick={() => setMainImage(img)}
-              className={`aspect-square bg-gray-50 rounded-xl overflow-hidden border-2 transition-colors ${
-                (mainImage || galleryImages[0]) === img ? "border-gray-900" : "border-transparent hover:border-gray-200"
-              }`}
-            >
-              <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
-            </button>
-          ))}
+          {/* Thumbnail row */}
+          <div className={`grid gap-2 ${galleryImages.length === 3 ? "grid-cols-3" : galleryImages.length === 4 ? "grid-cols-4" : "grid-cols-2"}`}>
+            {galleryImages.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setMainImage(img)}
+                className={`aspect-square bg-gray-50 rounded-xl overflow-hidden border-2 transition-colors ${
+                  (mainImage || galleryImages[0]) === img ? "border-gray-900" : "border-transparent hover:border-gray-200"
+                }`}
+              >
+                <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+
         </div>
-      
 
         {/* RIGHT: Info */}
         <div className="flex flex-col">
@@ -167,9 +175,9 @@ export default function ProductDetail() {
               <p className={`text-xs tracking-widest uppercase ${sizeError ? "text-red-400" : "text-gray-400"}`}>
                 Size {sizeError && "— Please select a size"}
               </p>
-              <button className="text-xs text-gray-400 underline hover:text-gray-700 transition-colors">
+              <Link to="/size-chart" className="text-xs text-gray-400 underline hover:text-gray-700 transition-colors">
                 Size Guide
-              </button>
+              </Link>
             </div>
             <div className="flex flex-wrap gap-2">
               {product.sizes.map((size) => (
@@ -208,7 +216,7 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          {/* Add to cart + Wishlist */}
+          {/* Add to cart */}
           <div className="flex gap-3 mb-6">
             <button
               onClick={handleAddToCart}
@@ -273,13 +281,17 @@ export default function ProductDetail() {
                 className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-300 transition-colors group"
               >
                 <div className="aspect-[3/4] bg-gray-50 flex items-center justify-center border-b border-gray-100">
-                  <span className="text-4xl">👗</span>
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-4xl">👗</span>
+                  )}
                 </div>
                 <div className="p-3">
                   <p className="text-[10px] text-gray-300 uppercase tracking-widest mb-1">{p.age}</p>
                   <p className="text-sm font-medium text-gray-900 mb-1">{p.name}</p>
                   <p className="text-sm font-medium">{formatPrice(p.price)}</p>
-              </div>
+                </div>
               </Link>
             ))}
           </div>

@@ -13,7 +13,7 @@ export default function Home() {
 
       {/* Category Grid */}
       <section className="px-4 md:px-8 py-8 md:py-12 bg-gray-50">
-        <h2 className="font-serif text-xl md:text-2xl mb-4 md:mb-6">Shop by Category</h2>
+        <h2 className="font-display text-xl md:text-2xl mb-4 md:mb-6">Shop by Category</h2>
         <div className="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
           {[
             { label: "Tops", emoji: "👕", cat: "tops" },
@@ -39,7 +39,7 @@ export default function Home() {
       {/* New Arrivals */}
       <section className="px-4 md:px-8 py-8 md:py-12 bg-white">
         <div className="flex items-center justify-between mb-4 md:mb-6">
-          <h2 className="font-serif text-xl md:text-2xl">New Arrivals</h2>
+          <h2 className="font-display text-xl md:text-2xl">New Arrivals</h2>
           <Link
             to="/catalog"
             className="text-xs tracking-widest uppercase text-gray-400 hover:text-gray-900 transition-colors"
@@ -57,7 +57,7 @@ export default function Home() {
       {/* Banner */}
       <section className="mx-4 md:mx-8 mb-8 md:mb-12 bg-gray-900 text-white rounded-2xl p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h2 className="font-serif text-2xl md:text-3xl font-medium">
+          <h2 className="font-display text-2xl md:text-3xl font-medium">
             New <em className="italic font-normal">arrivals</em> just landed
           </h2>
           <p className="text-sm text-gray-400 mt-2 font-light">

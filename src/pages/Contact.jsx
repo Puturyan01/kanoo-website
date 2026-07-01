@@ -44,7 +44,7 @@ export default function Contact() {
     <main className="min-h-screen bg-white">
 
       {/* HERO */}
-      <section className="bg-gray-50 border-b border-gray-100 px-4 md:px-16 py-14 md:py-20 text-center">
+      <section className="bg-gray-50 border-b border-gray-100 px-4 md:px-16 pt-16 pb-14 md:pt-24 md:pb-20 text-center -mt-14">
         <p className="text-xs tracking-[0.25em] uppercase text-gray-400 mb-3">Get in Touch</p>
         <h1 className="font-serif text-4xl md:text-5xl font-medium text-gray-900 leading-tight">
           We'd love to <em className="italic font-normal text-gray-400">hear</em>
