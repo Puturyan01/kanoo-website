@@ -1,16 +1,40 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import { products, categories, formatPrice } from "../data/products"
 import ProductCard from "../components/ProductCard"
+import { client } from "../lib/sanity"
+import { ALL_PRODUCTS_QUERY } from "../lib/queries"
+
+const categories = [
+  { id: "all", label: "All" },
+  { id: "tops", label: "Tops" },
+  { id: "bottoms", label: "Bottoms" },
+  { id: "sets", label: "Sets" },
+  { id: "outerwear", label: "Outerwear" },
+  { id: "accessories", label: "Accessories" },
+]
 
 export default function Shop() {
   const [searchParams] = useSearchParams()
   const initialCat = searchParams.get("category") || "all"
 
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
   const [activeCategory, setActiveCategory] = useState(initialCat)
   const [activeGender, setActiveGender] = useState("all")
   const [sortBy, setSortBy] = useState("newest")
   const [filterOpen, setFilterOpen] = useState(false)
+
+  useEffect(() => {
+    client.fetch(ALL_PRODUCTS_QUERY)
+      .then((data) => {
+        setProducts(data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error(err)
+        setLoading(false)
+      })
+  }, [])
 
   const filtered = products
     .filter((p) => activeCategory === "all" || p.category === activeCategory)
@@ -18,7 +42,7 @@ export default function Shop() {
     .sort((a, b) => {
       if (sortBy === "price-asc") return a.price - b.price
       if (sortBy === "price-desc") return b.price - a.price
-      return b.id - a.id
+      return new Date(b._createdAt) - new Date(a._createdAt)
     })
 
   const SidebarContent = () => (
@@ -65,6 +89,14 @@ export default function Shop() {
     </div>
   )
 
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="font-heading text-gray-400 animate-pulse text-sm tracking-widest">
+        Loading products...
+      </p>
+    </div>
+  )
+
   return (
     <main className="min-h-screen bg-gray-50">
 
@@ -85,7 +117,7 @@ export default function Shop() {
         </div>
       </div>
 
-      {/* ── CATEGORY TABS ── */}
+      {/* CATEGORY TABS */}
       <div className="bg-white border-b border-gray-100 px-4 md:px-8 py-3 flex gap-2 items-center overflow-x-auto scrollbar-hide">
         <span className="text-[10px] uppercase tracking-widest text-gray-300 mr-1 shrink-0 hidden md:block">
           Category
@@ -94,7 +126,7 @@ export default function Shop() {
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`text-xs px-4 py-1.5 rounded-full border transition-colors shrink-0 ${
+            className={`font-heading text-xs px-4 py-1.5 rounded-full border transition-colors shrink-0 ${
               activeCategory === cat.id
                 ? "bg-gray-900 text-white border-gray-900"
                 : "border-gray-200 text-gray-500 hover:border-gray-400"
@@ -131,13 +163,15 @@ export default function Shop() {
         <div className="flex gap-6 md:gap-8 items-start">
           {/* Sidebar desktop */}
           <aside className="hidden md:block w-48 shrink-0 bg-white border border-gray-100 rounded-xl p-5 sticky top-20">
-            <SidebarContent/>
+            <SidebarContent />
           </aside>
 
           <div className="flex-1">
             {/* Desktop count + sort */}
             <div className="hidden md:flex items-center justify-between mb-5">
-              <p className="text-sm text-gray-400">Showing {filtered.length} products</p>
+              <p className="font-sans text-sm text-gray-400">
+                Showing {filtered.length} products
+              </p>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -149,13 +183,27 @@ export default function Shop() {
               </select>
             </div>
 
-            <p className="text-xs text-gray-400 mb-3 md:hidden">{filtered.length} products</p>
+            <p className="font-sans text-xs text-gray-400 mb-3 md:hidden">
+              {filtered.length} products
+            </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {filtered.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            {filtered.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <span className="text-5xl mb-4">🎩</span>
+                <p className="font-heading font-semibold text-gray-500 text-lg mb-1">
+                  No products found
+                </p>
+                <p className="font-sans text-sm text-gray-400">
+                  Try changing the filter or category
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                {filtered.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -174,7 +222,7 @@ export default function Shop() {
           style={{ maxHeight: "80vh", overflowY: "auto" }}
         >
           <div className="flex items-center justify-between mb-5">
-            <h3 className="font-serif text-lg">Filter</h3>
+            <h3 className="font-display text-lg">Filter</h3>
             <button onClick={() => setFilterOpen(false)} className="text-gray-400">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
@@ -184,7 +232,7 @@ export default function Shop() {
           <SidebarContent />
           <button
             onClick={() => setFilterOpen(false)}
-            className="w-full mt-6 bg-gray-900 text-white text-xs tracking-widest uppercase py-3 rounded-xl"
+            className="w-full mt-6 bg-gray-900 text-white font-heading text-xs tracking-widest uppercase py-3 rounded-xl"
           >
             Show {filtered.length} Products
           </button>

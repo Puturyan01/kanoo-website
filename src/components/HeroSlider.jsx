@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { client } from "../lib/sanity"
+import { HERO_SLIDES_QUERY } from "../lib/queries"
 import { Link } from "react-router-dom"
 import { heroSlides } from "../data/products"
 
@@ -13,6 +15,12 @@ export default function HeroSlider() {
     setCurrent(index)
     setTimeout(() => setIsTransitioning(false), 700)
   }
+
+  const [slides, setSlides] = useState([])
+
+  useEffect(() => {
+    client.fetch(HERO_SLIDES_QUERY).then(setSlides)
+  }, [])
 
   const next = () => goTo((current + 1) % heroSlides.length)
 
