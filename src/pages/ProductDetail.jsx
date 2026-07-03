@@ -190,7 +190,7 @@ export default function ProductDetail() {
                         ? "border-gray-900 scale-110"
                         : "border-transparent hover:border-gray-300"
                     }`}
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: color.hex ? color.hex : color }}
                   />
                 ))}
               </div>
