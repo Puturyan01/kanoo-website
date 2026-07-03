@@ -11,7 +11,7 @@ export const ALL_PRODUCTS_QUERY = `*[_type == "product"] | order(_createdAt desc
   oldPrice,
   badge,
   sizes,
-  colors,
+  "colors": colors[].hex,
   "image": mainImage.asset->url,
   "gallery": gallery[].asset->url,
   inStock,
@@ -99,4 +99,35 @@ export const CONTACT_INFO_QUERY = `*[_type == "contactInfo"][0] {
   tiktok,
   whatsappLink,
   faqs
+}`
+
+export const PRODUCT_BY_ID_QUERY = `*[_type == "product" && _id == $id][0] {
+  _id,
+  name,
+  slug,
+  category,
+  season,
+  gender,
+  age,
+  price,
+  oldPrice,
+  badge,
+  sizes,
+  "colors": colors[].hex,
+  "image": mainImage.asset->url,
+  "gallery": gallery[].asset->url,
+  inStock,
+  featured,
+  _createdAt
+}`
+
+export const RELATED_PRODUCTS_QUERY = `*[_type == "product" && category == $category && _id != $id][0...4] {
+  _id,
+  name,
+  category,
+  age,
+  price,
+  badge,
+  "colors": colors[].hex,
+  "image": mainImage.asset->url,
 }`

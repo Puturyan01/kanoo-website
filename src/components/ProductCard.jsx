@@ -4,7 +4,7 @@ import { formatPrice } from "../data/products"
 export default function ProductCard({ product }) {
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={`/product/${product._id}`}
       className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-300 transition-colors group block"
     >
       {/* Image */}
