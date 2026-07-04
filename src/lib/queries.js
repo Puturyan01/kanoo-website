@@ -11,11 +11,12 @@ export const ALL_PRODUCTS_QUERY = `*[_type == "product"] | order(_createdAt desc
   oldPrice,
   badge,
   sizes,
-  "colors": colors,
+  "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
   "gallery": gallery[].asset->url,
   inStock,
-  featured
+  featured,
+  _createdAt
 }`
 
 // Produk featured saja (New Arrivals)
@@ -29,7 +30,7 @@ export const FEATURED_PRODUCTS_QUERY = `*[_type == "product" && featured == true
   price,
   oldPrice,
   badge,
-  colors,
+  "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
 }`
 
@@ -46,7 +47,7 @@ export const PRODUCT_BY_SLUG_QUERY = `*[_type == "product" && slug.current == $s
   oldPrice,
   badge,
   sizes,
-  colors,
+  "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
   "gallery": gallery[].asset->url,
   inStock,
@@ -101,6 +102,7 @@ export const CONTACT_INFO_QUERY = `*[_type == "contactInfo"][0] {
   faqs
 }`
 
+// Produk by ID
 export const PRODUCT_BY_ID_QUERY = `*[_type == "product" && _id == $id][0] {
   _id,
   name,
@@ -113,7 +115,7 @@ export const PRODUCT_BY_ID_QUERY = `*[_type == "product" && _id == $id][0] {
   oldPrice,
   badge,
   sizes,
-  "colors": colors,
+  "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
   "gallery": gallery[].asset->url,
   inStock,
@@ -121,6 +123,7 @@ export const PRODUCT_BY_ID_QUERY = `*[_type == "product" && _id == $id][0] {
   _createdAt
 }`
 
+// Related products
 export const RELATED_PRODUCTS_QUERY = `*[_type == "product" && category == $category && _id != $id][0...4] {
   _id,
   name,
@@ -128,6 +131,6 @@ export const RELATED_PRODUCTS_QUERY = `*[_type == "product" && category == $cate
   age,
   price,
   badge,
-  "colors": colors,
+  "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
 }`
