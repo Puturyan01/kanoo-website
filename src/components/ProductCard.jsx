@@ -47,12 +47,12 @@ export default function ProductCard({ product }) {
           )}
         </div>
         <div className="flex gap-1 mt-1.5">
-          {product.colors.map((color, i) => (
+          {product.colors?.map((color, i) => (
             <div
               key={i}
-              className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full border border-gray-200"
+              className="w-2 h-2 md:w2.5 md:h-2.5 rounded-full border border-gray-200"
               style={{ backgroundColor: color }}
-            />
+              />
           ))}
         </div>
       </div>

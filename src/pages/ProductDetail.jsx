@@ -17,28 +17,42 @@ export default function ProductDetail() {
   const [mainImage, setMainImage] = useState(null)
 
   useEffect(() => {
+    // Reset semua state sekaligus sebelum fetch
+    setProduct(null)
+    setRelated([])
     setLoading(true)
     setMainImage(null)
     setSelectedSize(null)
     setSelectedColor(0)
     setQuantity(1)
     setSizeError(false)
+    setAddedToCart(false)
+
+    let cancelled = false
 
     client.fetch(PRODUCT_BY_ID_QUERY, { id })
       .then((data) => {
+        if (cancelled) return
         setProduct(data)
         setLoading(false)
         if (data) {
           client.fetch(RELATED_PRODUCTS_QUERY, {
             category: data.category,
             id: data._id
-          }).then(setRelated)
+          }).then((rel) => {
+            if (!cancelled) setRelated(rel)
+          })
         }
       })
       .catch((err) => {
+        if (cancelled) return
         console.error(err)
         setLoading(false)
       })
+
+    return () => {
+      cancelled = true
+    }
   }, [id])
 
   const formatPrice = (price) =>
@@ -104,30 +118,27 @@ export default function ProductDetail() {
               <span className="text-[120px]">👗</span>
             )}
             {product.badge && (
-              <span className={`font-badge absolute top-4 left-4 text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full ${
-                product.badge === "new"
-                  ? "bg-emerald-50 text-emerald-700"
-                  : "bg-orange-50 text-orange-700"
-              }`}>
+              <span className={`font-badge absolute top-4 left-4 text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-full ${product.badge === "new"
+                ? "bg-emerald-50 text-emerald-700"
+                : "bg-orange-50 text-orange-700"
+                }`}>
                 {product.badge === "new" ? "New Arrival" : "On Sale"}
               </span>
             )}
           </div>
 
           {/* Thumbnails */}
-          <div className={`grid gap-2 ${
-            galleryImages.length === 3 ? "grid-cols-3" :
+          <div className={`grid gap-2 ${galleryImages.length === 3 ? "grid-cols-3" :
             galleryImages.length === 4 ? "grid-cols-4" : "grid-cols-2"
-          }`}>
+            }`}>
             {galleryImages.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setMainImage(img)}
-                className={`aspect-square bg-gray-50 rounded-xl overflow-hidden border-2 transition-colors ${
-                  (mainImage || galleryImages[0]) === img
-                    ? "border-gray-900"
-                    : "border-transparent hover:border-gray-200"
-                }`}
+                className={`aspect-square bg-gray-50 rounded-xl overflow-hidden border-2 transition-colors ${(mainImage || galleryImages[0]) === img
+                  ? "border-gray-900"
+                  : "border-transparent hover:border-gray-200"
+                  }`}
               >
                 <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
               </button>
@@ -181,15 +192,14 @@ export default function ProductDetail() {
                 Color — <span className="text-gray-600 font-medium">Option {selectedColor + 1}</span>
               </p>
               <div className="flex gap-2">
-                {product.colors.map((color, i) => (
+                {product.colors?.map((color, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedColor(i)}
-                    className={`w-8 h-8 rounded-full border-2 transition-all ${
-                      selectedColor === i
-                        ? "border-gray-900 scale-110"
-                        : "border-transparent hover:border-gray-300"
-                    }`}
+                    className={`w-8 h-8 rounded-full border-2 transition-all ${selectedColor === i
+                      ? "border-gray-900 scale-110"
+                      : "border-gray-200 hover:border-gray-400"
+                      }`}
                     style={{ backgroundColor: color }}
                   />
                 ))}
@@ -212,11 +222,10 @@ export default function ProductDetail() {
                 <button
                   key={size}
                   onClick={() => { setSelectedSize(size); setSizeError(false) }}
-                  className={`font-heading min-w-[48px] px-3 py-2 text-xs border rounded-lg transition-all ${
-                    selectedSize === size
-                      ? "bg-gray-900 text-white border-gray-900"
-                      : "border-gray-200 text-gray-600 hover:border-gray-400"
-                  }`}
+                  className={`font-heading min-w-[48px] px-3 py-2 text-xs border rounded-lg transition-all ${selectedSize === size
+                    ? "bg-gray-900 text-white border-gray-900"
+                    : "border-gray-200 text-gray-600 hover:border-gray-400"
+                    }`}
                 >
                   {size}
                 </button>
@@ -244,11 +253,10 @@ export default function ProductDetail() {
           <div className="flex gap-3 mb-6">
             <button
               onClick={handleAddToCart}
-              className={`font-heading flex-1 py-4 rounded-xl text-sm tracking-widest uppercase font-medium transition-all ${
-                addedToCart
-                  ? "bg-emerald-500 text-white"
-                  : "bg-gray-900 text-white hover:bg-gray-700"
-              }`}
+              className={`font-heading flex-1 py-4 rounded-xl text-sm tracking-widest uppercase font-medium transition-all ${addedToCart
+                ? "bg-emerald-500 text-white"
+                : "bg-gray-900 text-white hover:bg-gray-700"
+                }`}
             >
               {addedToCart ? "✓ Added to Cart!" : "Add to Cart"}
             </button>

@@ -45,9 +45,9 @@ export default function About() {
       {/* ── HERO ── */}
       <section className="relative bg-gray-900 text-white px-4 md:px-16 pt-24 pb-20 md:pt-36 md:pb-32 -mt-14 overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 text-[200px] leading-none select-none">KANOO.</div>
-          <div className="absolute bottom-10 right-10 text-[150px] leading-none select-none">👶</div>
+        <div className="absolute inset-0 opacity-10 overflow-hidden">
+          <div className="absolute top-10 left-10 text-[60px] md:text-[120px] lg:text-[200px] leading-none select-none">KANOO.</div>
+          <div className="absolute bottom-10 right-10 text-[60px] md:text-[100] lg:text-[150] leading-none select-none">👶</div>
         </div>
 
         <div className="relative z-10 max-w-3xl">
