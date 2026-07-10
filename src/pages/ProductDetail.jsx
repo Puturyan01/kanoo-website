@@ -9,11 +9,8 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null)
   const [related, setRelated] = useState([])
   const [loading, setLoading] = useState(true)
-  const [selectedSize, setSelectedSize] = useState(null)
   const [selectedColor, setSelectedColor] = useState(0)
-  const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
-  const [sizeError, setSizeError] = useState(false)
   const [mainImage, setMainImage] = useState(null)
 
   useEffect(() => {
@@ -22,10 +19,7 @@ export default function ProductDetail() {
     setRelated([])
     setLoading(true)
     setMainImage(null)
-    setSelectedSize(null)
     setSelectedColor(0)
-    setQuantity(1)
-    setSizeError(false)
     setAddedToCart(false)
 
     let cancelled = false
@@ -62,9 +56,7 @@ export default function ProductDetail() {
       minimumFractionDigits: 0,
     }).format(price)
 
-  const handleAddToCart = () => {
-    if (!selectedSize) { setSizeError(true); return }
-    setSizeError(false)
+  const handleBuyNow = () => {
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2500)
   }
@@ -207,58 +199,64 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* Size selector */}
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <p className={`font-sans text-xs tracking-widest uppercase ${sizeError ? "text-red-400" : "text-gray-400"}`}>
-                Size {sizeError && "— Please select a size"}
-              </p>
-              <Link to="/size-chart" className="font-sans text-xs text-gray-400 underline hover:text-gray-700 transition-colors">
+          {/* Size Chart Table */}
+          {product.sizeChartHeaders?.length > 0 && product.sizeChartRows?.length > 0 ? (
+            <div className="mb-6">
+              <p className="font-sans text-xs tracking-widest uppercase text-gray-400 mb-3">
                 Size Guide
-              </Link>
+              </p>
+              <div className="overflow-x-auto rounded-xl border border-gray-100">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-teal-600">
+                      {product.sizeChartHeaders.map((header, i) => (
+                        <th key={i} className="font-heading px-4 py-3 text-left text-[10px] tracking-widest uppercase text-white font-medium">
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {product.sizeChartRows.map((row, i) => (
+                      <tr key={i} className={`border-t border-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
+                        {row.values?.map((val, j) => (
+                          <td key={j} className={`px-4 py-3 font-sans text-sm ${j === 0 ? "font-semibold text-gray-900" : "text-gray-500 font-light"}`}>
+                            {val}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="font-sans text-[10px] text-gray-300 mt-2 font-light">
+                * Semua ukuran dalam centimeter (cm)
+              </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {product.sizes?.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => { setSelectedSize(size); setSizeError(false) }}
-                  className={`font-heading min-w-[48px] px-3 py-2 text-xs border rounded-lg transition-all ${selectedSize === size
-                    ? "bg-gray-900 text-white border-gray-900"
-                    : "border-gray-200 text-gray-600 hover:border-gray-400"
-                    }`}
-                >
-                  {size}
-                </button>
-              ))}
+          ) : (
+            <div className="mb-6">
+              <p className="font-sans text-xs tracking-widest uppercase text-gray-400 mb-3">Size</p>
+              <div className="flex flex-wrap gap-2">
+                {product.sizes?.map((size) => (
+                  <div key={size} className="font-heading min-w-[48px] px-3 py-2 text-xs border border-gray-200 rounded-lg text-gray-600 text-center">
+                    {size}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Quantity */}
-          <div className="mb-6">
-            <p className="font-sans text-xs tracking-widest uppercase text-gray-400 mb-3">Quantity</p>
-            <div className="flex items-center gap-3 border border-gray-200 rounded-xl w-fit px-2">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-8 h-10 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors text-lg"
-              >−</button>
-              <span className="font-heading text-sm font-medium w-6 text-center">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-8 h-10 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors text-lg"
-              >+</button>
-            </div>
-          </div>
 
           {/* Add to cart */}
           <div className="flex gap-3 mb-6">
             <button
-              onClick={handleAddToCart}
+              onClick={handleBuyNow}
               className={`font-heading flex-1 py-4 rounded-xl text-sm tracking-widest uppercase font-medium transition-all ${addedToCart
                 ? "bg-emerald-500 text-white"
                 : "bg-gray-900 text-white hover:bg-gray-700"
                 }`}
             >
-              {addedToCart ? "✓ Added to Cart!" : "Add to Cart"}
+              {addedToCart ? "✓ Added to Cart!" : "Buy Now"}
             </button>
           </div>
 

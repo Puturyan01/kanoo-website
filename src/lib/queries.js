@@ -115,13 +115,15 @@ export const PRODUCT_BY_ID_QUERY = `*[_type == "product" && _id == $id][0] {
   oldPrice,
   badge,
   sizes,
+  sizeChartHeaders,
+  sizeChartRows,
   "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
   "gallery": gallery[].asset->url,
   inStock,
   featured,
   _createdAt
-}`;
+}`
 
 // Related products
 export const RELATED_PRODUCTS_QUERY = `*[_type == "product" && category == $category && _id != $id][0...4] {
@@ -159,3 +161,5 @@ title,
   },
   footerQuote
   }`;
+
+  
