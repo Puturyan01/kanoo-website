@@ -199,51 +199,82 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {/* Size Chart Table */}
-          {product.sizeChartHeaders?.length > 0 && product.sizeChartRows?.length > 0 ? (
+          {/* Size Guide */}
+          {(product.sizeChartHeaders?.length > 0 || product.sizeGuideImage) && (
             <div className="mb-6">
               <p className="font-sans text-xs tracking-widest uppercase text-gray-400 mb-3">
                 Size Guide
               </p>
-              <div className="overflow-x-auto rounded-xl border border-gray-100">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-teal-600">
-                      {product.sizeChartHeaders.map((header, i) => (
-                        <th key={i} className="font-heading px-4 py-3 text-left text-[10px] tracking-widest uppercase text-white font-medium">
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {product.sizeChartRows.map((row, i) => (
-                      <tr key={i} className={`border-t border-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
-                        {row.values?.map((val, j) => (
-                          <td key={j} className={`px-4 py-3 font-sans text-sm ${j === 0 ? "font-semibold text-gray-900" : "text-gray-500 font-light"}`}>
-                            {val}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <p className="font-sans text-[10px] text-gray-300 mt-2 font-light">
-                * Semua ukuran dalam centimeter (cm)
-              </p>
-            </div>
-          ) : (
-            <div className="mb-6">
-              <p className="font-sans text-xs tracking-widest uppercase text-gray-400 mb-3">Size</p>
-              <div className="flex flex-wrap gap-2">
-                {product.sizes?.map((size) => (
-                  <div key={size} className="font-heading min-w-[48px] px-3 py-2 text-xs border border-gray-200 rounded-lg text-gray-600 text-center">
-                    {size}
+
+              <div className="border border-gray-100 rounded-2x1 overflow-hidden">
+
+                {/* Gambar Size Guide */}
+                {product.sizeGuideImage && (
+                  <div className="bg-gray-50 p-4 flex justify-center border-b border-gray-100">
+                    <img
+                      src={product.sizeGuideImage}
+                      alt="Size Guide"
+                      className="max-h-72 w-auto object-countain"
+                    />
                   </div>
-                ))}
+                )}
+
+                {/* Tabel Ukuran */}
+                {product.sizeChartHeaders?.length > 0 && product.sizeChartRows?.length > 0 && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="bg-teal-600">
+                          {product.sizeChartHeaders.map((header, i) => (
+                            <th
+                              key={i}
+                              className="font-heading px-4 py-3 text-center text-[10px] tracking-widest uppercase text-white font-medium"
+                            >
+                              {header}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {product.sizeChartRows.map((row, i) => (
+                          <tr
+                            key={i}
+                            className={`border-t border-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"
+                              }`}
+                          >
+                            {row.values?.map((val, j) => (
+                              <td
+                                key={j}
+                                className={`px-4 py-3 text-center font-sans text-sm ${j === 0
+                                    ? "font-semibold text-gray-900"
+                                    : "text-gray-500 font-light"
+                                  }`}
+                              >
+                                {val}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* Footer note */}
+                <div className="px-4 py-2 bg-gray-50 border-t border-gray-100">
+                  <p className="font-sans text-[10px] text-gray-300 font-light text-center">
+                    * Semua ukuran dalam (cm)
+                  </p>
+                </div>
               </div>
             </div>
+          )}
+
+          {/* Fallback - kalau tidak ada size guide sama sekali */}
+          {!product.sizeGuideImage && (!product.sizeChartHeaders || product.sizeChartHeaders.length === 0) && product.sizes?.length > 0 && (
+            <div className="mb-6">
+              <p className="font-sans text-xs tractking-widest uppercase text-gray-400 mb-3">Size</p>
+              {product.sizes}
           )}
 
 
