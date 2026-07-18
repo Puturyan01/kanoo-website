@@ -205,8 +205,7 @@ export default function ProductDetail() {
               <p className="font-sans text-xs tracking-widest uppercase text-gray-400 mb-3">
                 Size Guide
               </p>
-
-              <div className="border border-gray-100 rounded-2x1 overflow-hidden">
+              <div className="border border-gray-100 rounded-2xl overflow-hidden">
 
                 {/* Gambar Size Guide */}
                 {product.sizeGuideImage && (
@@ -214,7 +213,7 @@ export default function ProductDetail() {
                     <img
                       src={product.sizeGuideImage}
                       alt="Size Guide"
-                      className="max-h-72 w-auto object-countain"
+                      className="max-h-72 w-auto object-contain"
                     />
                   </div>
                 )}
@@ -226,35 +225,26 @@ export default function ProductDetail() {
                       <thead>
                         <tr className="bg-teal-600">
                           {product.sizeChartHeaders.map((header, i) => (
-                            <th
-                              key={i}
-                              className="font-heading px-4 py-3 text-center text-[10px] tracking-widest uppercase text-white font-medium"
-                            >
+                            <th key={i} className="font-heading px-4 py-3 text-center text-[10px] tracking-widest uppercase text-white font-medium whitespace-nowrap">
                               {header}
                             </th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
-                        {product.sizeChartRows.map((row, i) => (
-                          <tr
-                            key={i}
-                            className={`border-t border-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"
-                              }`}
-                          >
-                            {row.values?.map((val, j) => (
-                              <td
-                                key={j}
-                                className={`px-4 py-3 text-center font-sans text-sm ${j === 0
-                                    ? "font-semibold text-gray-900"
-                                    : "text-gray-500 font-light"
-                                  }`}
-                              >
-                                {val}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
+                        {product.sizeChartRows.map((row, i) => {
+                          const cells = row.split(',').map(v => v.trim())
+                          return (
+                            <tr key={i} className={`border-t border-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}>
+                              {cells.map((val, j) => (
+                                <td key={j} className={`px-4 py-3 text-center font-sans text-sm whitespace-nowrap ${j === 0 ? "font-semibold text-gray-900" : "text-gray-500 font-light"
+                                  }`}>
+                                  {val}
+                                </td>
+                              ))}
+                            </tr>
+                          )
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -263,7 +253,7 @@ export default function ProductDetail() {
                 {/* Footer note */}
                 <div className="px-4 py-2 bg-gray-50 border-t border-gray-100">
                   <p className="font-sans text-[10px] text-gray-300 font-light text-center">
-                    * Semua ukuran dalam (cm)
+                    * Semua ukuran dalam centimeter (cm)
                   </p>
                 </div>
               </div>
@@ -274,7 +264,17 @@ export default function ProductDetail() {
           {!product.sizeGuideImage && (!product.sizeChartHeaders || product.sizeChartHeaders.length === 0) && product.sizes?.length > 0 && (
             <div className="mb-6">
               <p className="font-sans text-xs tractking-widest uppercase text-gray-400 mb-3">Size</p>
-              {product.sizes}
+              <div className="flex flex-wrap gap-2">
+                {product.sizes.Intlmap((size) => (
+                  <div
+                    key={size}
+                    className="font-heading min-w-[48px] px-3 py-2 text-xs border border-gray-200 rounded-lg text-gray-600 text-center"
+                  >
+                    {size}
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
 
