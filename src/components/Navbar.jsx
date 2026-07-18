@@ -59,10 +59,10 @@ export default function Navbar() {
   }
 
   const shopItems = [
-    { label: "Hat", icon: "👒", category: "accessories" },
-    { label: "Top Wear", icon: "👕", category: "tops" },
-    { label: "Bottom Wear", icon: "👖", category: "bottoms" },
-    { label: "Shoes", icon: "👟", category: "shoes" },
+    {label: "Hat", icon: "/icons/hat.png", category: "accessories" },
+    {label: "Top Wear", icon: "/icons/tops.png", category: "tops" },
+    {label: "Bottom Wear", icon: "/icons/bottoms.png", category: "bottoms" },
+    {label: "Shoes", icon: "/icons/shoes.png", category: "shoes" },
   ]
 
   // Determine navbar background & text color based on page + scroll state
@@ -161,6 +161,8 @@ export default function Navbar() {
                   <span className="text-base">🛍️</span>
                   All Products
                 </Link>
+
+                {/* Dropdown items */}
                 {shopItems.map((item, i) => (
                   <Link
                     key={item.label}
@@ -170,7 +172,7 @@ export default function Navbar() {
                       i !== shopItems.length - 1 ? "border-b border-gray-50" : ""
                     }`}
                   >
-                    <span className="text-base">{item.icon}</span>
+                    <img src={item.icon} alt={item.label} className="w-5 h-5 object-contain opacity-60 group-hover:opacity-100" />
                     {item.label}
                   </Link>
                 ))}
@@ -348,7 +350,8 @@ export default function Navbar() {
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-3 pl-8 pr-6 py-3 text-xs tracking-widest uppercase text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                   >
-                    <span>{item.icon}</span> {item.label}
+                   <img src={item.icon} alt={item.label} className="w-5 h-5 object-contain opacity-60" />
+                   {item.label}
                   </Link>
                 ))}
               </div>

@@ -117,7 +117,7 @@ export const PRODUCT_BY_ID_QUERY = `*[_type == "product" && _id == $id][0] {
   sizes,
   sizeChartHeaders,
   sizeChartRows,
-  "SizeGuideImage": sizeGuideImage.asset->url,
+  "sizeGuideImage": sizeGuideImage.asset->url,
   "colors": colors[].hex.hex,
   "image": mainImage.asset->url,
   "gallery": gallery[].asset->url,

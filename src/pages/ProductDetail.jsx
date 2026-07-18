@@ -14,7 +14,6 @@ export default function ProductDetail() {
   const [mainImage, setMainImage] = useState(null)
 
   useEffect(() => {
-    // Reset semua state sekaligus sebelum fetch
     setProduct(null)
     setRelated([])
     setLoading(true)
@@ -209,11 +208,11 @@ export default function ProductDetail() {
 
                 {/* Gambar Size Guide */}
                 {product.sizeGuideImage && (
-                  <div className="bg-gray-50 p-4 flex justify-center border-b border-gray-100">
+                  <div className="bg-gray-50 border-b border-gray-100">
                     <img
                       src={product.sizeGuideImage}
                       alt="Size Guide"
-                      className="max-h-72 w-auto object-contain"
+                      className="w-full h-auto object-contain"
                     />
                   </div>
                 )}
@@ -265,7 +264,7 @@ export default function ProductDetail() {
             <div className="mb-6">
               <p className="font-sans text-xs tractking-widest uppercase text-gray-400 mb-3">Size</p>
               <div className="flex flex-wrap gap-2">
-                {product.sizes.Intlmap((size) => (
+                {product.sizes?.map((size) => (
                   <div
                     key={size}
                     className="font-heading min-w-[48px] px-3 py-2 text-xs border border-gray-200 rounded-lg text-gray-600 text-center"
