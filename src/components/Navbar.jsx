@@ -59,18 +59,18 @@ export default function Navbar() {
   }
 
   const shopItems = [
-    {label: "Hat", icon: "/icons/hat.png", category: "accessories" },
-    {label: "Top Wear", icon: "/icons/tops.png", category: "tops" },
-    {label: "Bottom Wear", icon: "/icons/bottoms.png", category: "bottoms" },
-    {label: "Shoes", icon: "/icons/shoes.png", category: "shoes" },
+    { label: "Hat", icon: "/icons/hat.png", category: "accessories" },
+    { label: "Top Wear", icon: "/icons/tops.png", category: "tops" },
+    { label: "Bottom Wear", icon: "/icons/bottoms.png", category: "bottoms" },
+    { label: "Shoes", icon: "/icons/shoes.png", category: "shoes" },
   ]
 
   // Determine navbar background & text color based on page + scroll state
   const navBg = isScrolled
     ? "bg-white/90 backdrop-blur-md border-b border-white/20 shadow-sm"
     : isOnDarkHero
-    ? "bg-transparent border-b border-white/10"
-    : "bg-white border-b border-gray-100"
+      ? "bg-transparent border-b border-white/10"
+      : "bg-white border-b border-gray-100"
 
   // Text color for nav links
   const getLinkColor = (isActive) => {
@@ -89,8 +89,8 @@ export default function Navbar() {
   const indicatorColor = (isScrolled || isOnLightHero)
     ? "bg-gray-900"
     : isOnDarkHero
-    ? "bg-white"
-    : "bg-gray-900"
+      ? "bg-white"
+      : "bg-gray-900"
 
   // Check if shop routes are active
   const isShopActive = location.pathname.startsWith("/shop") || location.pathname.startsWith("/product")
@@ -98,9 +98,8 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-8 h-14 flex items-center justify-between transition-all duration-500 ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${navBg}`}
+        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-8 h-14 flex items-center justify-between transition-all duration-500 ${isVisible ? "translate-y-0" : "-translate-y-full"
+          } ${navBg}`}
       >
 
         {/* ── LOGO ── */}
@@ -137,20 +136,18 @@ export default function Navbar() {
                 </svg>
                 {/* Active underline indicator */}
                 <span
-                  className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
-                    isShopActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-                  }`}
+                  className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${isShopActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                    }`}
                   style={{ transformOrigin: "center" }}
                 />
               </button>
 
               {/* Dropdown */}
               <div
-                className={`absolute top-full left-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden transition-all duration-200 ${
-                  shopOpen
-                    ? "opacity-100 translate-y-0 pointer-events-auto"
-                    : "opacity-0 -translate-y-2 pointer-events-none"
-                }`}
+                className={`absolute top-full left-0 mt-3 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden transition-all duration-200 ${shopOpen
+                  ? "opacity-100 translate-y-0 pointer-events-auto"
+                  : "opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
                 style={{ minWidth: "180px" }}
               >
                 <Link
@@ -158,7 +155,7 @@ export default function Navbar() {
                   onClick={() => setShopOpen(false)}
                   className="flex items-center gap-3 px-5 py-3 text-xs tracking-widest uppercase text-gray-700 font-medium hover:bg-gray-50 transition-colors border-b border-gray-100"
                 >
-                  <span className="text-base">🛍️</span>
+                  <img src="/icons/all_product.png" alt="All Product" className="w-5 h-5 obejct-cantain opacity-60" />
                   All Products
                 </Link>
 
@@ -168,9 +165,8 @@ export default function Navbar() {
                     key={item.label}
                     to={`/shop?category=${item.category}`}
                     onClick={() => setShopOpen(false)}
-                    className={`flex items-center gap-3 px-5 py-3 text-xs tracking-widest uppercase text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors ${
-                      i !== shopItems.length - 1 ? "border-b border-gray-50" : ""
-                    }`}
+                    className={`flex items-center gap-3 px-5 py-3 text-xs tracking-widest uppercase text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors ${i !== shopItems.length - 1 ? "border-b border-gray-50" : ""
+                      }`}
                   >
                     <img src={item.icon} alt={item.label} className="w-5 h-5 object-contain opacity-60 group-hover:opacity-100" />
                     {item.label}
@@ -191,9 +187,8 @@ export default function Navbar() {
                   <>
                     Catalog
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
-                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-                      }`}
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                        }`}
                       style={{ transformOrigin: "center" }}
                     />
                   </>
@@ -213,9 +208,8 @@ export default function Navbar() {
                   <>
                     Size Chart
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
-                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-                      }`}
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                        }`}
                       style={{ transformOrigin: "center" }}
                     />
                   </>
@@ -235,9 +229,8 @@ export default function Navbar() {
                   <>
                     About
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
-                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-                      }`}
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                        }`}
                       style={{ transformOrigin: "center" }}
                     />
                   </>
@@ -257,9 +250,8 @@ export default function Navbar() {
                   <>
                     Contact
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${
-                        isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-                      }`}
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${indicatorColor} ${isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                        }`}
                       style={{ transformOrigin: "center" }}
                     />
                   </>
@@ -269,11 +261,10 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop Icons */}
-          <div className={`flex gap-4 items-center border-l pl-6 transition-colors ${
-            (isScrolled || isOnLightHero) ? "border-gray-200 text-gray-500" : 
+          <div className={`flex gap-4 items-center border-l pl-6 transition-colors ${(isScrolled || isOnLightHero) ? "border-gray-200 text-gray-500" :
             isOnDarkHero ? "border-white/20 text-white/60" :
-            "border-gray-100 text-gray-400"
-          }`}>
+              "border-gray-100 text-gray-400"
+            }`}>
           </div>
         </div>
 
@@ -282,11 +273,10 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
-            className={`transition-colors ${
-              (isScrolled || isOnLightHero) ? "text-gray-700 hover:text-gray-900" :
+            className={`transition-colors ${(isScrolled || isOnLightHero) ? "text-gray-700 hover:text-gray-900" :
               isOnDarkHero ? "text-white/80 hover:text-white" :
-              "text-gray-700 hover:text-gray-900"
-            }`}
+                "text-gray-700 hover:text-gray-900"
+              }`}
           >
             {mobileOpen ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -306,30 +296,28 @@ export default function Navbar() {
 
       {/* ── MOBILE DRAWER ── */}
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
       >
         <div
           className="absolute inset-0 bg-black/30 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
         <div
-          className={`absolute top-14 right-0 w-72 h-[calc(100vh-56px)] bg-white shadow-2xl transition-transform duration-300 overflow-y-auto flex flex-col ${
-            mobileOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`absolute top-14 right-0 w-72 h-[calc(100vh-56px)] bg-white shadow-2xl transition-transform duration-300 overflow-y-auto flex flex-col ${mobileOpen ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           {/* Menu */}
           <ul className="list-none p-0 m-0 divide-y divide-gray-50 flex-1">
             <li>
               <button
                 onClick={() => setMobileShopOpen(!mobileShopOpen)}
-                className={`w-full flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase transition-colors ${
-                  isShopActive ? "text-gray-900 font-semibold" : "text-gray-600 hover:text-gray-900"
-                }`}
+                className={`w-full flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase transition-colors ${isShopActive ? "text-gray-900 font-semibold" : "text-gray-600 hover:text-gray-900"
+                  }`}
               >
                 <span className="flex items-center gap-3">
-                  <span>🛍️</span> Shop
+                  <img src="/icons/all_product.png" alt="Shop" className="w-5 h-5 object-contain opacity-60" />
+                  Shop
                   {isShopActive && <span className="w-1.5 h-1.5 rounded-full bg-gray-900 ml-1" />}
                 </span>
                 <svg
@@ -341,7 +329,8 @@ export default function Navbar() {
               </button>
               <div className={`overflow-hidden transition-all duration-300 bg-gray-50 ${mobileShopOpen ? "max-h-72" : "max-h-0"}`}>
                 <Link to="/shop" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 pl-8 pr-6 py-3 text-xs tracking-widest uppercase text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors border-b border-gray-100">
-                  <span>🛍️</span> All Products
+                  <img src="/icons/all_product.png" alt="All Products" className="w-5 h-5 object-contain opacity-60" />
+                  All Products
                 </Link>
                 {shopItems.map((item) => (
                   <Link
@@ -350,8 +339,7 @@ export default function Navbar() {
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-3 pl-8 pr-6 py-3 text-xs tracking-widest uppercase text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                   >
-                   <img src={item.icon} alt={item.label} className="w-5 h-5 object-contain opacity-60" />
-                   {item.label}
+                    <img src={item.icon} alt={item.label} className="w-5 h-5 object-contain opacity-60" />{item.label}
                   </Link>
                 ))}
               </div>
@@ -368,8 +356,7 @@ export default function Navbar() {
                   to={to}
                   onClick={() => setMobileOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase transition-colors ${
-                      isActive ? "text-gray-900 font-semibold" : "text-gray-600 hover:text-gray-900"
+                    `flex items-center justify-between px-6 py-4 text-xs tracking-widest uppercase transition-colors ${isActive ? "text-gray-900 font-semibold" : "text-gray-600 hover:text-gray-900"
                     }`
                   }
                 >

@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
       {/* Info */}
       <div className="p-2.5 md:p-3">
         <p className="text-[9px] md:text-[10px] text-gray-300 uppercase tracking-widest mb-1">{product.age}</p>
-        <p className="text-xs md:text-sm font-medium text-gray-900 leading-snug mb-1.5">{product.name}</p>
+      <p className="font-JosefinSans text-base md:text-lg text-gray-900 leading-snug mb-1.5">{product.name}</p>
         <div className="flex items-baseline gap-1.5">
           <span className="text-xs md:text-sm font-medium">{formatPrice(product.price)}</span>
           {product.oldPrice && (

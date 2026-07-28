@@ -87,7 +87,11 @@ export const SIZE_CHART_QUERY = `*[_type == "sizeChart"] | order(category asc) {
   _id,
   category,
   headers,
-  rows
+  rows[]{
+    size,
+    values
+    },
+  "guideImage": sizeGuideImage.asset->url
 }`;
 
 // Contact info

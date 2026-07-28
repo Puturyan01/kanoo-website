@@ -148,7 +148,7 @@ export default function ProductDetail() {
             </span>
           </div>
 
-          <h1 className="font-display text-3xl md:text-4xl text-gray-900 leading-tight mb-4">
+          <h1 className="font-Cutyboldy text-3xl md:text-5xl text-gray-900 leading-tight mb-4">
             {product.name}
           </h1>
 
@@ -252,7 +252,7 @@ export default function ProductDetail() {
                 {/* Footer note */}
                 <div className="px-4 py-2 bg-gray-50 border-t border-gray-100">
                   <p className="font-sans text-[10px] text-gray-300 font-light text-center">
-                    * Semua ukuran dalam centimeter (cm)
+                    *All measurements are in centimeters. (cm)
                   </p>
                 </div>
               </div>
